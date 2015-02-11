@@ -8,7 +8,7 @@ def read(filename):
     return open(os.path.join(os.path.dirname(__file__), filename)).read()
 
 setup(
-    name='imbox',
+    name='swdt-imbox',
     version=version,
     description="Python IMAP for Human beings",
     long_description=read('README.md'),

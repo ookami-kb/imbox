@@ -105,11 +105,14 @@ def parse_attachment(message_part):
 
 
 def decode_content(message):
-    content = message.get_payload(decode=True)
-    charset = message.get_content_charset('utf-8')
-    if charset != 'utf-8':
-        return content.decode(charset)
-    return content
+    try:
+        content = message.get_payload(decode=True)
+        charset = message.get_content_charset('utf-8')
+        if charset != 'utf-8':
+            return content.decode(charset)
+        return content
+    except:
+        return u'Could not parse content'
 
 
 def parse_email(raw_email):
