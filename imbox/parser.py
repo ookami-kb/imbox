@@ -87,6 +87,8 @@ def parse_attachment(message_part):
                 content = StringIO(file_data)
             else:
                 content = BytesIO(file_data)
+            if file_data is None:
+                return None
 
             attachment = {
                 'content-type': message_part.get_content_type(),
