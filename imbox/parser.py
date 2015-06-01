@@ -67,7 +67,7 @@ def decode_param(param):
             if type_ == 'Q':
                 value = quopri.decodestring(code)
             elif type_ == 'B':
-                value = base64.decodestring(code)
+                value = base64.decodebytes(code)
             value = str_encode(value, encoding)
             value_results.append(value)
             if value_results:
@@ -118,7 +118,7 @@ def decode_content(message):
             return content.decode(charset)
         return content
     except Exception:
-        return u'Could not parse content'
+        return 'Could not parse content'
 
 
 def parse_email(raw_email):
