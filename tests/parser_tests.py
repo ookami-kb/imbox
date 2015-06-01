@@ -2,7 +2,7 @@ from __future__ import unicode_literals
 import unittest
 from imbox.parser import *
 
-raw_email = """Delivered-To: johndoe@gmail.com
+raw_email = b"""Delivered-To: johndoe@gmail.com
 X-Originating-Email: [martin@amon.cx]
 Message-ID: <test0@example.com>
 Return-Path: martin@amon.cx
@@ -47,10 +47,10 @@ class TestParser(unittest.TestCase):
         self.assertEqual('<test0@example.com>', parsed_email.message_id)
 
     def test_parse_email_ignores_header_casing(self):
-        self.assertEqual('one', parse_email('Message-ID: one').message_id)
-        self.assertEqual('one', parse_email('Message-Id: one').message_id)
-        self.assertEqual('one', parse_email('Message-id: one').message_id)
-        self.assertEqual('one', parse_email('message-id: one').message_id)
+        self.assertEqual('one', parse_email(b'Message-ID: one').message_id)
+        self.assertEqual('one', parse_email(b'Message-Id: one').message_id)
+        self.assertEqual('one', parse_email(b'Message-id: one').message_id)
+        self.assertEqual('one', parse_email(b'message-id: one').message_id)
 
     # TODO - Complete the test suite
     def test_parse_attachment(self):
