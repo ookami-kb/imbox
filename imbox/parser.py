@@ -64,10 +64,15 @@ def decode_param(param):
         match = re.search(r'=\?((?:\w|-)+)\?(Q|B)\?(.+)\?=', value)
         if match:
             encoding, type_, code = match.groups()
+            try:
+                if isinstance(code, str):
+                    code = code.encode('ascii')
+            except Exception:
+                pass
             if type_ == 'Q':
                 value = quopri.decodestring(code)
             elif type_ == 'B':
-                value = base64.decodestring(code)
+                value = base64.decodebytes(code)
             value = str_encode(value, encoding)
             value_results.append(value)
             if value_results:
