@@ -1,5 +1,5 @@
 from __future__ import unicode_literals
-from six import StringIO
+from six import StringIO, BytesIO
 
 import re
 import email
@@ -88,13 +88,17 @@ def parse_attachment(message_part):
 
         if dispositions[0].lower() in ["attachment", "inline"]:
             file_data = message_part.get_payload(decode=True)
+            if isinstance(file_data, str):
+                content = StringIO(file_data)
+            else:
+                content = BytesIO(file_data)
             if file_data is None:
                 return None
 
             attachment = {
                 'content-type': message_part.get_content_type(),
                 'size': len(file_data),
-                'content': StringIO(file_data)
+                'content': content
             }
 
             for param in dispositions[1:]:
@@ -118,12 +122,15 @@ def decode_content(message):
         if charset != 'utf-8':
             return content.decode(charset)
         return content
-    except:
-        return u'Could not parse content'
+    except Exception:
+        return 'Could not parse content'
 
 
 def parse_email(raw_email):
-    email_message = email.message_from_string(raw_email)
+    if isinstance(raw_email, str):
+        email_message = email.message_from_string(raw_email)
+    else:
+        email_message = email.message_from_bytes(raw_email)
     maintype = email_message.get_content_maintype()
     parsed_email = {}
 

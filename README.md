@@ -1,7 +1,7 @@
 Imbox - Python IMAP for Humans
 =======
 
-[![Build Status](https://travis-ci.org/martinrusev/imbox.svg?branch=master)](https://travis-ci.org/martinrusev/imbox)
+[![Build Status](https://travis-ci.org/ookami-kb/imbox.svg?branch=master)](https://travis-ci.org/ookami-kb/imbox)
 
 
 Python library for reading IMAP mailboxes and converting email content to machine readable data
@@ -9,7 +9,7 @@ Python library for reading IMAP mailboxes and converting email content to machin
 Installation
 ============
 
-	pip install https://github.com/martinrusev/imbox/archive/master.zip
+	pip install https://github.com/ookami-kb/imbox/archive/master.zip
 
 
 Usage 
