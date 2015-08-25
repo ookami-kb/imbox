@@ -52,12 +52,10 @@ class TestParser(unittest.TestCase):
         self.assertEqual('one', parse_email(b'Message-id: one').message_id)
         self.assertEqual('one', parse_email(b'message-id: one').message_id)
 
-    # TODO - Complete the test suite
-    def test_parse_attachment(self):
-        pass
-
-    def test_decode_mail_header(self):
-        pass
+    def test_decode_header(self):
+        self.assertEqual(decode_mail_header('=?koi8-r?B?UmU6IO7B0M/Nyc7BzsnFIM8g2sHO0dTJyQ==?='),
+                         'Re: Напоминание о занятии')
+        self.assertEqual(decode_mail_header('=?koi8-r?B?79vJwsvBIDQwND8/Pw==?='), 'Ошибка 404???')
    
     def test_get_mail_addresses(self):
 
