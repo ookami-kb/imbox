@@ -1,5 +1,6 @@
 from __future__ import unicode_literals
 import unittest
+
 from imbox.parser import *
 
 raw_email = b"""Delivered-To: johndoe@gmail.com
@@ -37,7 +38,6 @@ Hi, this is a test email with no <span style="font-weight: bold;">attachments</s
 
 
 class TestParser(unittest.TestCase):
-
     def test_parse_email(self):
         parsed_email = parse_email(raw_email)
 
@@ -56,11 +56,15 @@ class TestParser(unittest.TestCase):
         self.assertEqual(decode_mail_header('=?koi8-r?B?UmU6IO7B0M/Nyc7BzsnFIM8g2sHO0dTJyQ==?='),
                          'Re: Напоминание о занятии')
         self.assertEqual(decode_mail_header('=?koi8-r?B?79vJwsvBIDQwND8/Pw==?='), 'Ошибка 404???')
-   
-    def test_get_mail_addresses(self):
+        self.assertEqual(decode_mail_header('=?koi8-r?B?98/Q0s/TINDPINDSyczP1sXOycAgIvDPzNjTy8nKINHa2csg2sEg?='
+                                            '=?koi8-r?B?NyDV0s/Lz9ci?='),
+                         'Вопрос по приложению "Польский язык за 7 уроков"')
 
+    def test_get_mail_addresses(self):
         to_message_object = email.message_from_string("To: John Doe <johndoe@gmail.com>")
-        self.assertEqual([{'email': 'johndoe@gmail.com', 'name': 'John Doe'}], get_mail_addresses(to_message_object, 'to'))
+        self.assertEqual([{'email': 'johndoe@gmail.com', 'name': 'John Doe'}],
+                         get_mail_addresses(to_message_object, 'to'))
 
         from_message_object = email.message_from_string("From: John Smith <johnsmith@gmail.com>")
-        self.assertEqual([{'email': 'johnsmith@gmail.com', 'name': 'John Smith'}], get_mail_addresses(from_message_object, 'from'))
+        self.assertEqual([{'email': 'johnsmith@gmail.com', 'name': 'John Smith'}],
+                         get_mail_addresses(from_message_object, 'from'))

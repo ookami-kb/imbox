@@ -7,6 +7,6 @@ def str_decode(value, encoding=None, errors='strict'):
         return bytes(value, encoding, errors).decode('utf-8')
     except:
         try:
-            return value.decode('utf-8')
+            return value.decode(encoding)
         except:
             return str(value)
