@@ -53,7 +53,7 @@ def get_mail_addresses(message, header_name):
         addresses = email.utils.getaddresses(headers)
     except TypeError:
         print('IMBOX_HEADER_ERROR', headers)
-        addresses = ['unknown', 'unknown']
+        addresses = [('unknown', 'unknown')]
 
     for index, (address_name, address_email) in enumerate(addresses):
         addresses[index] = {'name': decode_mail_header(address_name),
