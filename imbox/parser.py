@@ -186,7 +186,8 @@ def parse_email(raw_email):
                              'x-spam-status',
                              'x-spam-score',
                              'content-type',
-                             'auto-submitted']
+                             'auto-submitted',
+                             'x-autoreply']
 
     parsed_email['headers'] = []
     for key, value in email_dict.items():
