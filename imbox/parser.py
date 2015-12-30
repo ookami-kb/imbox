@@ -1,13 +1,15 @@
 from __future__ import unicode_literals
-from six import StringIO, BytesIO
 
-import re
-import email
 import base64
+import email
 import quopri
+import re
 import time
 from datetime import datetime
 from email.header import decode_header
+
+from six import StringIO, BytesIO
+
 from imbox.utils import str_encode, str_decode
 
 
@@ -47,7 +49,11 @@ def get_mail_addresses(message, header_name):
     Retrieve all email addresses from one message header.
     """
     headers = [h for h in message.get_all(header_name, [])]
-    addresses = email.utils.getaddresses(headers)
+    try:
+        addresses = email.utils.getaddresses(headers)
+    except TypeError:
+        print('IMBOX_HEADER_ERROR', headers)
+        addresses = ['unknown', 'unknown']
 
     for index, (address_name, address_email) in enumerate(addresses):
         addresses[index] = {'name': decode_mail_header(address_name),
@@ -152,7 +158,7 @@ def parse_email(raw_email):
                 content = decode_content(part)
 
             is_inline = content_disposition is None \
-                or content_disposition == "inline"
+                        or content_disposition == "inline"
             if content_type == "text/plain" and is_inline:
                 body['plain'].append(content)
             elif content_type == "text/html" and is_inline:
