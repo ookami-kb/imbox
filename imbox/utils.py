@@ -1,5 +1,9 @@
 def str_encode(value='', encoding=None, errors='strict'):
-    return str(value, encoding, errors)
+    try:
+        return str(value, encoding, errors)
+    except Exception as e:
+        print(e)
+        return '===UNKNOWN==='
 
 
 def str_decode(value, encoding=None, errors='strict'):
